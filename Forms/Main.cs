@@ -47,5 +47,10 @@ namespace lks24
                 MessageBox.Show("Exception: " + ex.Message);
             }
         }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
