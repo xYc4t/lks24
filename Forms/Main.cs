@@ -26,7 +26,7 @@ namespace lks24
                 using var reader = com.ExecuteReader();
                 if (reader.Read())
                 {
-                    string type = reader["tipe_user"].ToString();
+                    var type = reader["tipe_user"].ToString();
 
                     switch (type)
                     {

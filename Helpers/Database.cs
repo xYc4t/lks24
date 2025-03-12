@@ -18,13 +18,13 @@ namespace lks24
         /// Tests the database connection.
         /// Throws an exception if it fails.
         /// </summary>
-        public static void TestConnection()
+        public static async Task TestConnection()
         {
             using (var connection = Connection())
             {
                 try
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
                 }
                 catch (Exception ex)
                 {

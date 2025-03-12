@@ -13,7 +13,7 @@ namespace lks24
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Database.TestConnection();
+            await Database.TestConnection();
             Application.Run(new Main());
         }
     }

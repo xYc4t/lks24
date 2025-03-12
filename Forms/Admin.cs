@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using Google.Protobuf.WellKnownTypes;
 using MySql.Data.MySqlClient;
 
 namespace lks24.Forms
@@ -20,12 +19,8 @@ namespace lks24.Forms
             pnlUser.Visible = false;
         }
 
-        private void btnLogTanggal_Click(object sender, EventArgs e)
-        {
-            LoadLogs(dtpLogTanggal.Value);
-        }
-
-        private void LoadLogs(DateTime? filter = null)
+        private DataTable dtLog = new DataTable();
+        private void LoadLogs()
         {
             try
             {
@@ -33,23 +28,22 @@ namespace lks24.Forms
                 con.Open();
 
                 string query = "SELECT l.id_log, u.username, l.waktu, l.aktivitas " +
-                               "FROM tbl_log l INNER JOIN tbl_user u ON l.id_user = u.id_user ";
-
-                if (filter.HasValue)
-                {
-                    string dateFilter = filter.Value.ToString("yyyy-MM-dd");
-                    query += $"WHERE DATE(l.waktu) = '{dateFilter}'";
-                }
+                               "FROM tbl_log l INNER JOIN tbl_user u ON l.id_user = u.id_user";
 
                 using var adapter = new MySqlDataAdapter(query, con);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                dgvLog.DataSource = dt;
+                
+                adapter.Fill(dtLog);
+                dgvLog.DataSource = dtLog;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Exception: " + ex.Message);
             }
+        }
+
+        private void btnLogFilter_Click(object sender, EventArgs e)
+        {
+            dtLog.DefaultView.RowFilter = $"waktu >= #{dtpLogFilter.Value: MM/dd/yyyy 00:00:00}# AND waktu < #{dtpLogFilter.Value: MM/dd/yyyy 23:59:59}#";
         }
 
         private void lblUser_Click(object sender, EventArgs e)
@@ -58,6 +52,7 @@ namespace lks24.Forms
             pnlUser.Visible = true;
 
             pnlLog.Visible = false;
+            LoadUsers();
         }
 
         private void btnUserTambah_Click(object sender, EventArgs e)
@@ -75,7 +70,8 @@ namespace lks24.Forms
 
         }
 
-        private void LoadUsers(String filter)
+        private DataTable dtUser = new DataTable();
+        private void LoadUsers()
         {
             try
             {
@@ -84,20 +80,19 @@ namespace lks24.Forms
 
                 string query = "SELECT * FROM tbl_user";
 
-                if (string.IsNullOrEmpty(filter))
-                {
-                    //I think I'm gonna go different way for filtering... Filter form dtv, not directly on SQL. Later. Pusing sumpah OOP. 0803251748
-                }
-
                 using var adapter = new MySqlDataAdapter(query, con);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                dgvLog.DataSource = dt;
+                adapter.Fill(dtUser);
+                dgvUser.DataSource = dtUser;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Exception: " + ex.Message);
             }
+        }
+
+        private void txtUserFilter_TextChanged(object sender, EventArgs e)
+        {
+            dtUser.DefaultView.RowFilter = $"nama LIKE '%{txtUserFilter.Text}%'";
         }
     }
 }
