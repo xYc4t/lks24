@@ -40,12 +40,12 @@
             btnUserEdit = new Button();
             btnUserTambah = new Button();
             txtUserPassword = new TextBox();
-            txtUserTelepon = new TextBox();
+            txtUserTelpon = new TextBox();
             txtUserUsername = new TextBox();
             txtUserNama = new TextBox();
             txtUserAlamat = new TextBox();
             lblUserPassword = new Label();
-            lblUserTelepon = new Label();
+            lblUserTelpon = new Label();
             lblUserUsername = new Label();
             lblUserNama = new Label();
             lblUserAlamat = new Label();
@@ -54,6 +54,7 @@
             lblTitle = new Label();
             btnLog = new Button();
             lblUser = new Button();
+            lblUserID = new Label();
             pnlLog.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvLog).BeginInit();
             pnlUser.SuspendLayout();
@@ -120,18 +121,19 @@
             // pnlUser
             // 
             pnlUser.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            pnlUser.Controls.Add(lblUserID);
             pnlUser.Controls.Add(dgvUser);
             pnlUser.Controls.Add(txtUserFilter);
             pnlUser.Controls.Add(btnUserHapus);
             pnlUser.Controls.Add(btnUserEdit);
             pnlUser.Controls.Add(btnUserTambah);
             pnlUser.Controls.Add(txtUserPassword);
-            pnlUser.Controls.Add(txtUserTelepon);
+            pnlUser.Controls.Add(txtUserTelpon);
             pnlUser.Controls.Add(txtUserUsername);
             pnlUser.Controls.Add(txtUserNama);
             pnlUser.Controls.Add(txtUserAlamat);
             pnlUser.Controls.Add(lblUserPassword);
-            pnlUser.Controls.Add(lblUserTelepon);
+            pnlUser.Controls.Add(lblUserTelpon);
             pnlUser.Controls.Add(lblUserUsername);
             pnlUser.Controls.Add(lblUserNama);
             pnlUser.Controls.Add(lblUserAlamat);
@@ -204,12 +206,12 @@
             txtUserPassword.Size = new Size(100, 23);
             txtUserPassword.TabIndex = 11;
             // 
-            // txtUserTelepon
+            // txtUserTelpon
             // 
-            txtUserTelepon.Location = new Point(16, 140);
-            txtUserTelepon.Name = "txtUserTelepon";
-            txtUserTelepon.Size = new Size(100, 23);
-            txtUserTelepon.TabIndex = 10;
+            txtUserTelpon.Location = new Point(16, 140);
+            txtUserTelpon.Name = "txtUserTelpon";
+            txtUserTelpon.Size = new Size(100, 23);
+            txtUserTelpon.TabIndex = 10;
             // 
             // txtUserUsername
             // 
@@ -241,14 +243,14 @@
             lblUserPassword.TabIndex = 6;
             lblUserPassword.Text = "Password";
             // 
-            // lblUserTelepon
+            // lblUserTelpon
             // 
-            lblUserTelepon.AutoSize = true;
-            lblUserTelepon.Location = new Point(16, 122);
-            lblUserTelepon.Name = "lblUserTelepon";
-            lblUserTelepon.Size = new Size(48, 15);
-            lblUserTelepon.TabIndex = 5;
-            lblUserTelepon.Text = "Telepon";
+            lblUserTelpon.AutoSize = true;
+            lblUserTelpon.Location = new Point(16, 122);
+            lblUserTelpon.Name = "lblUserTelpon";
+            lblUserTelpon.Size = new Size(42, 15);
+            lblUserTelpon.TabIndex = 5;
+            lblUserTelpon.Text = "Telpon";
             // 
             // lblUserUsername
             // 
@@ -324,6 +326,14 @@
             lblUser.UseVisualStyleBackColor = true;
             lblUser.Click += lblUser_Click;
             // 
+            // lblUserID
+            // 
+            lblUserID.AutoSize = true;
+            lblUserID.Location = new Point(249, 19);
+            lblUserID.Name = "lblUserID";
+            lblUserID.Size = new Size(0, 15);
+            lblUserID.TabIndex = 17;
+            // 
             // Admin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -360,12 +370,12 @@
         private ComboBox cmbUserTipe;
         private Label lblUserTipe;
         private TextBox txtUserPassword;
-        private TextBox txtUserTelepon;
+        private TextBox txtUserTelpon;
         private TextBox txtUserUsername;
         private TextBox txtUserNama;
         private TextBox txtUserAlamat;
         private Label lblUserPassword;
-        private Label lblUserTelepon;
+        private Label lblUserTelpon;
         private Label lblUserUsername;
         private Label lblUserNama;
         private Label lblUserAlamat;
@@ -374,5 +384,6 @@
         private Button btnUserHapus;
         private Button btnUserEdit;
         private Button btnUserTambah;
+        private Label lblUserID;
     }
 }

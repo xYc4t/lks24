@@ -9,6 +9,7 @@ namespace lks24.Forms
 		{
 			InitializeComponent();
 			LoadLogs();
+			cmbUserTipe.DataSource = new List<string> { "Admin", "Kasir", "Gudang" };
 		}
 
 		private void btnLog_Click(object sender, EventArgs e)
@@ -37,6 +38,8 @@ namespace lks24.Forms
 
 				adapter.Fill(dtLog);
 				dgvLog.DataSource = dtLog;
+
+				ClearInputFields(pnlLog);
 			}
 			catch (Exception ex)
 			{
@@ -60,17 +63,86 @@ namespace lks24.Forms
 
 		private void btnUserTambah_Click(object sender, EventArgs e)
 		{
+			using (var con = Database.Connection())
+			{
+				try
+				{
+					con.Open();
+					string query = $"INSERT INTO tbl_user(tipe_user, nama, alamat, telpon, username, password) " +
+						$"VALUES ('{cmbUserTipe.SelectedValue}', '{txtUserNama.Text}', '{txtUserAlamat.Text}', '{txtUserTelpon.Text}', '{txtUserUsername.Text}', '{txtUserPassword.Text}')";
 
+					MessageBox.Show(query);
+					using var cmd = new MySqlCommand(query, con);
+					if (cmd.ExecuteNonQuery() > 0)
+					{
+						MessageBox.Show("Success!");
+					} else
+					{
+						MessageBox.Show("Failed.");
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("Exception: " + ex.Message);
+				}
+			}
+			LoadUsers();
 		}
 
 		private void btnUserEdit_Click(object sender, EventArgs e)
 		{
+			using (var con = Database.Connection())
+			{
+				try
+				{
+					con.Open();
+					string query = $"UPDATE tbl_user SET " +
+						$"tipe_user = '{cmbUserTipe.SelectedValue}', nama = '{txtUserNama.Text}', alamat = '{txtUserAlamat.Text}', telpon = '{txtUserTelpon.Text}', username = '{txtUserUsername.Text}', password = '{txtUserPassword.Text}' " +
+						$"WHERE id_user = {lblUserID.Text}";
 
+					MessageBox.Show(query);
+					using var cmd = new MySqlCommand(query, con);
+					if (cmd.ExecuteNonQuery() > 0)
+					{
+						MessageBox.Show("Success!");
+					} else
+					{
+						MessageBox.Show("Failed.");
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("Exception: " + ex.Message);
+				}
+			}
+			LoadUsers();
 		}
 
 		private void btnUserHapus_Click(object sender, EventArgs e)
 		{
+			using (var con = Database.Connection())
+			{
+				try
+				{
+					con.Open();
+					string query = $"DELETE FROM tbl_user WHERE id_user = '{lblUserID.Text}'";
 
+					MessageBox.Show(query);
+					using var cmd = new MySqlCommand(query, con);
+					if (cmd.ExecuteNonQuery() > 0)
+					{
+						MessageBox.Show("Success!");
+					} else
+					{
+						MessageBox.Show("Failed.");
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("Exception: " + ex.Message);
+				}
+			}
+			LoadUsers();
 		}
 
 		private DataTable dtUser = new DataTable();
@@ -88,6 +160,8 @@ namespace lks24.Forms
 				using var adapter = new MySqlDataAdapter(query, con);
 				adapter.Fill(dtUser);
 				dgvUser.DataSource = dtUser;
+
+				ClearInputFields(pnlUser, lblUserID);
 			}
 			catch (Exception ex)
 			{
@@ -105,13 +179,13 @@ namespace lks24.Forms
 			if (e.RowIndex < 0 || e.ColumnIndex < 0)
 				return;
 
-			cmbUserTipe.DataSource = new List<string> { "Admin", "Kasir", "Gudang" };
-			TextBox[] rowHeader = { txtUserNama, txtUserAlamat, txtUserTelepon, txtUserUsername, txtUserPassword };
+			TextBox[] rowHeader = { txtUserNama, txtUserAlamat, txtUserTelpon, txtUserUsername, txtUserPassword };
 
 			string[] rowData = dgvUser.Rows[e.RowIndex].Cells.Cast<DataGridViewCell>()
 					.Select(cell => cell.Value?.ToString() ?? "")
 					.ToArray();
 
+			lblUserID.Text = rowData[0];
 			cmbUserTipe.SelectedItem = rowData[1];
 			for (int i = 0; i < rowHeader.Length; i++)
 			{
@@ -119,6 +193,22 @@ namespace lks24.Forms
 			}
 
 			MessageBox.Show(string.Join(", ", rowData) + $"Index: {e.RowIndex}");
+		}
+
+		private void ClearInputFields(Control container, params Label[] labels)
+		{
+			foreach (Control ctrl in container.Controls)
+			{
+				if (ctrl is TextBox textBox)
+					textBox.Text = "";
+				else if (ctrl is ComboBox comboBox)
+					comboBox.SelectedIndex = -1;
+			}
+
+			foreach (Label lbl in labels)
+			{
+				lbl.Text = "";
+			}
 		}
 	}
 }
