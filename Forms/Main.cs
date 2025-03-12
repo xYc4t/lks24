@@ -31,11 +31,14 @@ namespace lks24
 					switch (type)
 					{
 						case "Admin":
-							new Admin().Show();
+							new Admin(this).Show();
 							this.Hide();
 							break;
 							// TO BE ADDED
 					}
+
+					txtUsername.Text = null;
+					txtPassword.Text = null;
 				}
 				else
 				{
