@@ -147,12 +147,17 @@
             // 
             dgvUser.AllowUserToAddRows = false;
             dgvUser.AllowUserToDeleteRows = false;
+            dgvUser.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvUser.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvUser.EnableHeadersVisualStyles = false;
             dgvUser.Location = new Point(16, 243);
             dgvUser.Name = "dgvUser";
             dgvUser.ReadOnly = true;
+            dgvUser.RowHeadersVisible = false;
+            dgvUser.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvUser.Size = new Size(553, 129);
             dgvUser.TabIndex = 16;
+            dgvUser.CellClick += dgvUser_CellClick;
             // 
             // txtUserFilter
             // 
